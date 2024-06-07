@@ -15,15 +15,17 @@ CREATE TABLE Programador(
 );
 
 CREATE TABLE Contratante(
-    CPF TEXT PRIMARY KEY,
+    CNPJ TEXT PRIMARY KEY,
     email TEXT,
-    nome TEXT,
+    nome_empresa TEXT,
     telefone TEXT
 );
 
 CREATE TABLE Projeto(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    datacriacao TEXT,
+    mes INTEGER,
+    ano INTEGER,
+    dia INTEGER,
     valor REAL,
     situacao TEXT,
     CPF_gerente TEXT,
@@ -42,9 +44,12 @@ CREATE TABLE Participa_Programador_Projeto(
 CREATE TABLE Versao(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     numeroversao REAL,
-    datalancamento TEXT,
+    mes INTEGER,
+    ano INTEGER,
+    dia INTEGER,
     descricao TEXT,
     idProjeto INTEGER,   
+    status TEXT,
     FOREIGN KEY (idProjeto) REFERENCES Projeto (id)     
 );
 
@@ -57,12 +62,31 @@ CREATE TABLE Cria_Programador_Versao(
 
 CREATE TABLE Commit (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    dataCommit TEXT,
+    mes INTEGER,
+    ano INTEGER,
+    dia INTEGER,
     mensagem TEXT,
     CPF_programador TEXT,
     idVersao INTEGER,
     FOREIGN KEY (CPF_programador) REFERENCES Programador (CPF),
     FOREIGN KEY (idVersao) REFERENCES Versao (id)
 );
-
+CREATE TABLE Issue (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    mes INTEGER,
+    ano INTEGER,
+    dia INTEGER,
+    status TEXT,
+    descricao TEXT,
+    id_versao INTEGER,
+    CPF_prog_criador TEXT,
+    FOREIGN KEY (id_versao) REFERENCES Versao (id),
+    FOREIGN KEY (CPF_prog_criador) REFERENCES Programador (CPF)
+);
+CREATE TABLE Realiza_Issue_Programador(
+    CPF_programador TEXT,
+    id_issue INTEGER,
+    FOREIGN KEY (CPF_programador) REFERENCES Programador (CPF),
+    FOREIGN KEY (id_issue) REFERENCES Issue (id)
+);
 ''')
