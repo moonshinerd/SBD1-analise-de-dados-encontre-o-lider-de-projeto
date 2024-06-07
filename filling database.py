@@ -60,7 +60,7 @@ CREATE TABLE Cria_Programador_Versao(
     FOREIGN KEY (idVersao) REFERENCES Versao(id)
 );
 
-CREATE TABLE Commit (
+CREATE TABLE Commits (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     mes INTEGER,
     ano INTEGER,
